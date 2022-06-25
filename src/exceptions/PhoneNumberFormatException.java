@@ -2,6 +2,10 @@ package exceptions;
 
 public class PhoneNumberFormatException extends Exceptions{
     public PhoneNumberFormatException() {
-        super("Invalid phone number");
+        super("Invalid phoneNumber");
+    }
+
+    public PhoneNumberFormatException(String message) {
+        super(message);
     }
 }
