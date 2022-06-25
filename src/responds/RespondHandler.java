@@ -17,11 +17,11 @@ public abstract class RespondHandler {
 
    public abstract void Handle();
 
-    public void parseErrorToJson(Exceptions exceptions){
+    public void parseErrorToJson(Exceptions exception){
         JSONObject jsonObject=new JSONObject();
         jsonObject.put("exception",true);
-        jsonObject.put("caused",exceptions.getCause());
-        jsonObject.put("message",exceptions.getMessage());
+        jsonObject.put("caused",exception.getCause());
+        jsonObject.put("message",exception.getMessage());
         client.sendMessage(jsonObject.toString());
     }
 }

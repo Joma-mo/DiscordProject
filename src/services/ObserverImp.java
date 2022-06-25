@@ -10,19 +10,29 @@ public class ObserverImp implements Observer {
 
     @Override
     public void addFriend(String userName, Friend friend) throws Exceptions {
-        if(!data.isExist(userName))
-            throw new DataHasAlreadyExistException(userName+"is Already your friend");
-        else
-            data.addFriend(null,friend);
+        if(data.isExist(userName, friend)) {
+            throw new DataHasAlreadyExistException(friend.getUserName() + " is already your friend");
+        } else {
+            data.addFriend(userName, friend);
+        }
     }
 
     @Override
-    public void removeFriend(String userName, Friend friend) {
-        data.addFriend(data.findUser(userName), friend);
+    public void removeFriend(String userName, Friend friend) throws Exceptions {
+        if(!data.isExist(userName, friend)) {
+            throw new DataHasAlreadyExistException(friend.getUserName() + " is not your friend");
+        } else {
+            data.removeFriend(userName, friend);
+        }
+
     }
 
     @Override
-    public void blockFriend(String userName, Friend friend) {
-        data.addToBlockedFriend(null,null);
+    public void blockFriend(String userName, Friend friend) throws Exceptions {
+        if(!data.isExist(userName, friend)) {
+            throw new DataHasAlreadyExistException(friend.getUserName() + " is not your friend!");
+        } else {
+            data.addToBlockedFriend(userName, friend);
+        }
     }
 }

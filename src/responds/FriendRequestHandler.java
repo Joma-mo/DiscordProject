@@ -23,9 +23,9 @@ public class FriendRequestHandler extends RespondHandler {
         Friend friend = new Friend(userName, email);
         Observer observer=new ObserverImp();
         try {
-            observer.addFriend(userName,friend);
-        }catch (Exceptions exceptions) {
-
+            observer.addFriend(client.getUserName(), friend);
+        }catch (Exceptions exception) {
+            parseErrorToJson(exception);
         }
     }
 }
