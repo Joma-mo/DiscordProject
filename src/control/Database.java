@@ -33,7 +33,7 @@ public class Database {
            return (ArrayList<UserAccount>) obj;
     }
 
-    public void saveFriends(HashMap<UserAccount, HashSet<Friend>> friends) {
+    public void saveFriends(HashMap<UserAccount, ArrayList<Friend>> friends) {
         saveObject(friends, "file/friends.bin");
     }
 

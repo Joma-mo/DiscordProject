@@ -58,11 +58,11 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    public void sendMessage(Message message, String userName) {
+    public void sendMessage(String message, String userName) {
         for(ClientHandler clientHandler : clientHandlers) {
             if (clientHandler.userName.equals(userName)) {
                 try {
-                    clientHandler.output.writeUTF(message.toString());
+                    clientHandler.output.writeUTF(message);
                 }
                 catch (IOException e) {
                     CLoseSocket();
@@ -98,8 +98,17 @@ public class ClientHandler implements Runnable {
                     case "blockedFriend":
                         handler = new BlockedFriendHandler(json, this);
                         break;
+                    case "ShowFriends":
+                        handler = new ShowFriendsHandler(json, this);
+                        break;
+                    case "ShowBlockedFriends":
+                        handler = new ShowBlockedFriendsHandler(json, this);
+                        break;
                     case "message":
                         handler = new MessageHandler(json, this);
+                        break;
+                    case "AddServer":
+                        handler = new AddServerHandler(json, this);
                         break;
                     default:
                         handler = new DoNothing(json, this);

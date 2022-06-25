@@ -29,7 +29,7 @@ public class SignUpRespondHandler extends RespondHandler{
             checkUserName(userName);
         }
         catch (Exceptions exception) {
-            client.sendMessage(exception.getMessage());
+            client.sendMessage(exception.getMessage(), client.getUserName());
         }
 
         // Check the format of password
@@ -37,7 +37,7 @@ public class SignUpRespondHandler extends RespondHandler{
             checkPassword(password);
         }
         catch (Exceptions exception) {
-            client.sendMessage(exception.getMessage());
+            client.sendMessage(exception.getMessage(), client.getUserName());
         }
 
         // Check the format of email
@@ -45,7 +45,7 @@ public class SignUpRespondHandler extends RespondHandler{
             checkEmail(email);
         }
         catch (Exceptions exception) {
-            client.sendMessage(exception.getMessage());
+            client.sendMessage(exception.getMessage(), client.getUserName());
         }
 
         // Check the format of phone number
@@ -53,18 +53,18 @@ public class SignUpRespondHandler extends RespondHandler{
             checkPhoneNumber(phoneNumber);
         }
         catch (Exceptions exception) {
-            client.sendMessage(exception.getMessage());
+            client.sendMessage(exception.getMessage(), client.getUserName());
         }
 
         UserAccount user = new UserAccount(userName, password, email);
-        client.sendMessage("user added successfully");
+        client.sendMessage("user added successfully", client.getUserName());
 
         Authentication authentication=new AuthenticationImp();
         try {
             authentication.signUp(user);
         }
         catch (Exceptions exception) {
-            client.sendMessage(exception.getMessage());
+            client.sendMessage(exception.getMessage(), client.getUserName());
         }
     }
 

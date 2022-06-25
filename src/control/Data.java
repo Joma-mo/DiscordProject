@@ -10,7 +10,7 @@ import java.util.HashSet;
 
 public class Data {
     private ArrayList<UserAccount> accounts;
-    private HashMap<UserAccount, HashSet<Friend>> friends;
+    private HashMap<UserAccount, ArrayList<Friend>> friends;
     private HashMap<UserAccount, HashSet<Friend>> blockedFriends;
     private HashMap<UserAccount, ArrayList<Message>> messages;
     private Database database;
@@ -32,7 +32,7 @@ public class Data {
 
     public void addUser(UserAccount user) {
         accounts.add(user);
-        friends.put(user, new HashSet<>());
+        friends.put(user, new ArrayList<>());
         messages.put(user, new ArrayList<>());
         blockedFriends.put(user, new HashSet<>());
     }
@@ -77,5 +77,9 @@ public class Data {
             }
         }
         return false;
+    }
+
+    public ArrayList<Friend> listFriends(String userName) {
+        return friends.get(findUser(userName));
     }
 }
