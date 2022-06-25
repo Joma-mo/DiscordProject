@@ -9,7 +9,6 @@ public class UserAccount extends Person {
     public UserAccount(String userName, String password, String email) {
         super(userName, email);
         this.password = password;
-        messages = new ArrayList<>();
     }
 
     public UserAccount(String userName, String password, String email, String phoneNumber) {

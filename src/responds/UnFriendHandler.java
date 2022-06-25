@@ -1,17 +1,15 @@
 package responds;
 
 import control.ClientHandler;
+import control.Data;
 import exceptions.Exceptions;
 import interfaces.Observer;
 import org.json.JSONObject;
 import services.Friend;
 import services.ObserverImp;
-import services.UserAccount;
 
-public class FriendRequestHandler extends RespondHandler {
-
-
-    public FriendRequestHandler(JSONObject json, ClientHandler client) {
+public class UnFriendHandler extends RespondHandler{
+    public UnFriendHandler(JSONObject json, ClientHandler client) {
         super(json, client);
     }
 
@@ -21,10 +19,11 @@ public class FriendRequestHandler extends RespondHandler {
         String email = json.getString("email");
 
         Friend friend = new Friend(userName, email);
-        Observer observer=new ObserverImp();
+        Observer observer = new ObserverImp();
         try {
-            observer.addFriend(client.getUserName(), friend);
-        }catch (Exceptions exception) {
+            observer.removeFriend(client.getUserName(), friend);
+        }
+        catch (Exceptions exception) {
             parseErrorToJson(exception);
         }
     }

@@ -1,13 +1,20 @@
 package services;
 
-public class Message {
-    private String messageText;
+import java.time.LocalDateTime;
 
-    public Message(String messageText) {
+public class Message {
+    private String nameOfSender;
+    private String messageText;
+    private LocalDateTime dateTime;
+
+    public Message(String nameOfSender, String messageText, LocalDateTime dateTime) {
+        this.nameOfSender = nameOfSender;
         this.messageText = messageText;
+        this.dateTime = dateTime;
     }
 
-    public String getMessageText() {
-        return messageText;
+    @Override
+    public String toString() {
+        return nameOfSender + ": " + messageText + "\n" + dateTime.toString();
     }
 }
