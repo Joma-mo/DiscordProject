@@ -1,6 +1,7 @@
 package responds;
 
 import control.ClientHandler;
+import exceptions.Exceptions;
 import interfaces.Observer;
 import org.json.JSONObject;
 import services.Friend;
@@ -20,8 +21,11 @@ public class FriendRequestHandler extends RespondHandler {
         String email = json.getString("email");
 
         Friend friend = new Friend(userName, email);
+        Observer observer=new ObserverImp();
+        try {
+            observer.addFriend(userName,friend);
+        }catch (Exceptions exceptions) {
 
-        Observer observer = new ObserverImp();
-        observer.addFriend(client.getUserName(), friend);
+        }
     }
 }

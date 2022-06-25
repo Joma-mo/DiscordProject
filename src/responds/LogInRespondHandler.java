@@ -1,6 +1,7 @@
 package responds;
 
 import control.ClientHandler;
+import exceptions.Exceptions;
 import org.json.JSONObject;
 import services.AuthenticationImp;
 
@@ -19,9 +20,10 @@ public class LogInRespondHandler extends RespondHandler{
 
         try {
             authenticationImp.logIn(userName, password);
+
         }
-        catch (Exception e) {
-            client.sendMessage(e.getMessage());
+        catch (Exceptions e) {
+            parseErrorToJson(e);
         }
 
     }

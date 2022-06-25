@@ -2,6 +2,7 @@ package control;
 
 import org.json.JSONObject;
 import responds.*;
+import services.Message;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -57,11 +58,11 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    public void sendMessage(String message, String userName) {
+    public void sendMessage(Message message, String userName) {
         for(ClientHandler clientHandler : clientHandlers) {
             if (clientHandler.userName.equals(userName)) {
                 try {
-                    clientHandler.output.writeUTF(message);
+                    clientHandler.output.writeUTF(message.toString());
                 }
                 catch (IOException e) {
                     CLoseSocket();
@@ -85,11 +86,17 @@ public class ClientHandler implements Runnable {
                     case "logIn":
                         handler = new LogInRespondHandler(json, this);
                         break;
-                    case "SignUp":
+                    case "signUp":
                         handler = new SignUpRespondHandler(json, this);
                         break;
-                    case "FriendRequest":
+                    case "friendRequest":
                         handler = new FriendRequestHandler(json, this);
+                        break;
+                    case "unFriend":
+                        handler = new UnFriendHandler(json, this);
+                        break;
+                    case "blockedFriend":
+                        handler = new BlockedFriendHandler(json, this);
                         break;
                     case "message":
                         handler = new MessageHandler(json, this);
