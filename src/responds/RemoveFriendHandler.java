@@ -6,8 +6,8 @@ import interfaces.Observer;
 import org.json.JSONObject;
 import services.ObserverImp;
 
-public class BlockedFriendHandler extends RespondHandler{
-    public BlockedFriendHandler(JSONObject json, ClientHandler client) {
+public class RemoveFriend extends RespondHandler{
+    public RemoveFriend(JSONObject json, ClientHandler client) {
         super(json, client);
     }
 
@@ -16,10 +16,10 @@ public class BlockedFriendHandler extends RespondHandler{
         String friendUserName = json.getString("friendUserName");
         Observer observer = new ObserverImp();
         try {
-            observer.blockFriend(client.getUserName(), friendUserName);
+            observer.removeFriend(client.getUserName(), friendUserName);
         }
         catch (Exceptions exception) {
-            parseErrorToJson(exception, "blockedFriend");
+            parseErrorToJson(exception, "removeFriend");
         }
     }
 }

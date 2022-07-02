@@ -4,9 +4,9 @@ import control.ClientHandler;
 import exceptions.Exceptions;
 import interfaces.Observer;
 import org.json.JSONObject;
-import services.Friend;
 import services.ObserverImp;
-import services.UserAccount;
+
+import java.util.Random;
 
 public class FriendRequestHandler extends RespondHandler {
 
@@ -17,15 +17,18 @@ public class FriendRequestHandler extends RespondHandler {
 
     @Override
     public void Handle() {
-        String userName = json.getString("userName");
-        String email = json.getString("email");
-
-        Friend friend = new Friend(userName, email);
+        String friendUserName = json.getString("friendUserName");
         Observer observer=new ObserverImp();
+        Random random = new Random();
+
         try {
-            observer.addFriend(client.getUserName(), friend);
+            observer.addFriend(client.getUserName(), friendUserName);
+            parseMessageToJson(friendUserName + " added successfully!", "friendRequest");
+            int rand = random.nextInt(10000);
+            observer.setIdToUserAccounts(client.getUserName(), friendUserName, rand);
+
         }catch (Exceptions exception) {
-            parseErrorToJson(exception);
+            parseErrorToJson(exception, "friendRequest");
         }
     }
 }
