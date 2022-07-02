@@ -20,10 +20,10 @@ public class LogInRespondHandler extends RespondHandler{
 
         try {
             authenticationImp.logIn(userName, password);
-
+            parseMessageToJson("Welcome to your Account", "logIn");
         }
         catch (Exceptions e) {
-            parseErrorToJson(e);
+            parseErrorToJson(e, "logIn");
         }
 
     }

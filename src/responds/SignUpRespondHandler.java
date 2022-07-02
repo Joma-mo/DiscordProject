@@ -7,11 +7,7 @@ import org.json.JSONObject;
 import services.AuthenticationImp;
 import services.UserAccount;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class SignUpRespondHandler extends RespondHandler{
-
     public SignUpRespondHandler(JSONObject json, ClientHandler client) {
         super(json, client);
     }
@@ -19,7 +15,6 @@ public class SignUpRespondHandler extends RespondHandler{
     @Override
     public void Handle() {
         String userName=json.getString("userName");
-
         String password=json.getString("password");
         String email = json.getString("email");
         String phoneNumber = json.getString("phoneNumber");
@@ -29,7 +24,7 @@ public class SignUpRespondHandler extends RespondHandler{
             checkUserName(userName);
         }
         catch (Exceptions exception) {
-            client.sendMessage(exception.getMessage(), client.getUserName());
+            parseErrorToJson(exception, "signUp");
         }
 
         // Check the format of password
@@ -37,7 +32,7 @@ public class SignUpRespondHandler extends RespondHandler{
             checkPassword(password);
         }
         catch (Exceptions exception) {
-            client.sendMessage(exception.getMessage(), client.getUserName());
+            parseErrorToJson(exception, "signUp");
         }
 
         // Check the format of email
@@ -45,7 +40,7 @@ public class SignUpRespondHandler extends RespondHandler{
             checkEmail(email);
         }
         catch (Exceptions exception) {
-            client.sendMessage(exception.getMessage(), client.getUserName());
+            parseErrorToJson(exception, "signUp");
         }
 
         // Check the format of phone number
@@ -53,58 +48,49 @@ public class SignUpRespondHandler extends RespondHandler{
             checkPhoneNumber(phoneNumber);
         }
         catch (Exceptions exception) {
-            client.sendMessage(exception.getMessage(), client.getUserName());
+            parseErrorToJson(exception, "signUp");
         }
 
         UserAccount user = new UserAccount(userName, password, email);
-        client.sendMessage("user added successfully", client.getUserName());
 
-        Authentication authentication=new AuthenticationImp();
+        Authentication authentication = new AuthenticationImp();
         try {
             authentication.signUp(user);
+            parseMessageToJson("User added successfully", "signUp");
         }
         catch (Exceptions exception) {
-            client.sendMessage(exception.getMessage(), client.getUserName());
+            parseErrorToJson(exception, "signUp");
         }
     }
 
     public void checkUserName(String userName) throws Exceptions {
-        if (userName.length() < 6) {
-            throw new UserNameFormatException("The userName should be more than 6 character");
-        }
+        String pattern = "^[a-zA-Z0-9_.]{6,20}$";
 
-        Pattern p = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$");
-        Matcher m = p.matcher(userName);
-        if(m.find()) {
-            throw new UserNameFormatException("Invalid userName");
+        if (!userName.matches(pattern)) {
+            throw new UserNameFormatException();
         }
     }
 
     public void checkPassword(String password) throws Exceptions {
-        Pattern p = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
-        Matcher m = p.matcher(password);
-        if(!m.find()) {
+        String pattern = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
+
+        if(!password.matches(pattern)) {
             throw new PasswordFormatException();
         }
     }
 
     public void checkEmail(String email) throws Exceptions {
-        if(email.contains("@")) {
-            String []splitEmail = email.split("@");
+        String pattern = "^(.+)@(\\S+)$";
 
-            if(!splitEmail[1].equals("gmail.com")) {
-                throw new EmailFormatException();
-            }
-        } else {
+        if(!email.matches(pattern)) {
             throw new EmailFormatException();
         }
     }
 
     public void checkPhoneNumber(String phoneNumber) throws Exceptions {
-        Pattern p = Pattern.compile("^(\\+\\d{1,2}\\s?)?1?\\-?\\.?\\s?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$");
-        Matcher m = p.matcher(phoneNumber);
+        String pattern = "^(\\+\\d{1,2}\\s?)?1?\\-?\\.?\\s?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$";
 
-        if(!m.find()) {
+        if(!phoneNumber.matches(pattern)) {
             throw new PhoneNumberFormatException();
         }
     }
