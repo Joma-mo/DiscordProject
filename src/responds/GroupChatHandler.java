@@ -9,10 +9,20 @@ import services.UserServer;
 import java.time.LocalDateTime;
 
 public class GroupChatHandler extends RespondHandler{
+    /**
+     * constructor.
+     * @param json receives a JSONObject,
+     * @param client receives a client handler.
+     */
     public GroupChatHandler(JSONObject json, ClientHandler client) {
         super(json, client);
     }
 
+    /**
+     * receives a server name and channel name from JSONObject,
+     * adding message to the specific server.
+     * sending message to all members of specific server.
+     */
     @Override
     public void Handle() {
         String serverName = json.getString("serverName");

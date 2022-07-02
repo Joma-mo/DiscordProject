@@ -7,10 +7,20 @@ import org.json.JSONObject;
 import services.ServerInterfaceImp;
 
 public class AddMemberToServerHandler extends RespondHandler{
+    /**
+     * constructor.
+     * @param json receives a JSONObject
+     * @param client receives a client handler
+     */
     public AddMemberToServerHandler(JSONObject json, ClientHandler client) {
         super(json, client);
     }
 
+    /**
+     * receiving server name, maker of server and new member name from JsonObject
+     * add member to the specified server.
+     * Throws Exceptions.
+     */
     @Override
     public void Handle() {
         String serverName = json.getString("serverName");

@@ -9,6 +9,11 @@ import java.net.Socket;
 public class Server {
     private ServerSocket serverSocket;
 
+    /**
+     * server constructor.
+     * @param serverSocket while socket is not closed, accepts sockets from clients.\
+     * Throws IOException.
+     */
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
         while (!serverSocket.isClosed()) {

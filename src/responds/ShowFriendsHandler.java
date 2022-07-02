@@ -13,11 +13,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShowFriendsHandler extends RespondHandler {
-
+    /**
+     * constructor.
+     * @param json receives a JSONObject,
+     * @param client receives a client handler.
+     */
     public ShowFriendsHandler(JSONObject json, ClientHandler client) {
         super(json, client);
     }
 
+    /**
+     * showing the friends to the client.
+     * Throws Exceptions.
+     */
     @Override
     public void Handle() {
         try {

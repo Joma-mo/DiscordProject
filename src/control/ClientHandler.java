@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * class to handle the requests form clients, and reply to them.
+ */
 public class ClientHandler implements Runnable {
     private Socket socket;
     private static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
@@ -17,6 +20,10 @@ public class ClientHandler implements Runnable {
     private DataOutputStream output;
     private String userName;
 
+    /**
+     * @param class constructor. Receives a socket.
+     *        Throws an IOException
+     */
     public ClientHandler(Socket socket) {
         this.socket = socket;
         try {
@@ -32,6 +39,9 @@ public class ClientHandler implements Runnable {
     }
 
 
+    /**
+     * close socket, input stream and output stream.
+     */
     private void CLoseSocket() {
         try {
             if (socket != null)
@@ -46,6 +56,10 @@ public class ClientHandler implements Runnable {
     }
 
 
+    /**
+     * @param message send the message to all clients except itself.
+     *                Throws an IoException.
+     */
     public void sendMessage(String message) {
         for (ClientHandler clientHandler : clientHandlers) {
             if (!clientHandler.userName.equals(this.userName)) {
@@ -58,6 +72,12 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    /**
+     * @param message get the message to send for a client
+     * @param userName get the username of client to send message for.
+     *                 sending a message to a specific client.
+     *                 Throws IOException.
+     */
     public void sendMessage(String message, String userName) {
         for(ClientHandler clientHandler : clientHandlers) {
             if (clientHandler.userName.equals(userName)) {
@@ -71,10 +91,18 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    /**
+     * @return return username.
+     */
     public String getUserName() {
         return userName;
     }
 
+    /**
+     * while socket is connected, receives a request from client
+     * and handle that specific request.
+     * Throws IOException.
+     */
     @Override
     public void run() {
         while (socket.isConnected()) {

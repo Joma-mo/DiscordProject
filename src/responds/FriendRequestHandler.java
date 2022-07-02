@@ -11,14 +11,25 @@ import java.util.Random;
 public class FriendRequestHandler extends RespondHandler {
 
 
+    /**
+     * constructor.
+     *
+     * @param json   receives a JSONObject,
+     * @param client receives a client handler.
+     */
     public FriendRequestHandler(JSONObject json, ClientHandler client) {
         super(json, client);
     }
 
+    /**
+     * receives a friend username from JSONObject,
+     * send friend request to specific user.
+     * Throws Exceptions.
+     */
     @Override
     public void Handle() {
         String friendUserName = json.getString("friendUserName");
-        Observer observer=new ObserverImp();
+        Observer observer = new ObserverImp();
         Random random = new Random();
 
         try {
@@ -27,7 +38,7 @@ public class FriendRequestHandler extends RespondHandler {
             int rand = random.nextInt(10000);
             observer.setIdToUserAccounts(client.getUserName(), friendUserName, rand);
 
-        }catch (Exceptions exception) {
+        } catch (Exceptions exception) {
             parseErrorToJson(exception, "friendRequest");
         }
     }

@@ -7,10 +7,19 @@ import services.UserAccount;
 import services.UserServer;
 
 public class SeeTheStatusOfMemberHandler extends RespondHandler{
+    /**
+     * constructor.
+     * @param json receives a JSONObject,
+     * @param client receives a client handler.
+     */
     public SeeTheStatusOfMemberHandler(JSONObject json, ClientHandler client) {
         super(json, client);
     }
 
+    /**
+     * receives the server name from JsonObject,
+     * sending the status of all members in a server to a client.
+     */
     @Override
     public void Handle() {
         String serverName = json.getString("serverName");

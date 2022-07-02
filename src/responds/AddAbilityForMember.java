@@ -7,10 +7,19 @@ import services.UserAccount;
 import services.UserServer;
 
 public class AddAbilityForMember extends RespondHandler{
+    /**
+     * constructor.
+     * @param json receives a Jsonobject
+     * @param client receives a clientHandler object
+     */
     public AddAbilityForMember(JSONObject json, ClientHandler client) {
         super(json, client);
     }
 
+    /**
+     * receiving member name, ability and server name from Json Object,
+     * adding ability for the specified member.
+     */
     @Override
     public void Handle() {
         String memberName = json.getString("memberName");

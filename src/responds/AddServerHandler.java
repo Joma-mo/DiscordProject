@@ -7,10 +7,20 @@ import services.ServerInterfaceImp;
 import services.UserServer;
 
 public class AddServerHandler extends RespondHandler{
+    /**
+     * constructor
+     * @param json receives a JSONObject,
+     * @param client receives a client handler
+     */
     public AddServerHandler(JSONObject json, ClientHandler client) {
         super(json, client);
     }
 
+    /**
+     * receives server name from JsonObject,
+     * add server.
+     * Throws Exceptions.
+     */
     @Override
     public void Handle() {
         String serverName = json.getString("serverName");

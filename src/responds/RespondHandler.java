@@ -20,6 +20,11 @@ public abstract class RespondHandler {
     protected JSONObject json;
     protected ClientHandler client;
 
+    /**
+     * constructor.
+     * @param json receives a JSONObject,
+     * @param client receives a client handler.
+     */
     public RespondHandler(JSONObject json, ClientHandler client) {
         this.client = client;
         this.json = json;
@@ -28,6 +33,11 @@ public abstract class RespondHandler {
 
     public abstract void Handle();
 
+    /**
+     * @param message receives the message as a String,
+     * @param method receives the method as a String,
+     *               parsing them to the JsonObject and send message to the client.
+     */
     public void parseMessageToJson(String message, String method) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("exception", false);
@@ -36,6 +46,13 @@ public abstract class RespondHandler {
         client.sendMessage(String.valueOf(jsonObject));
     }
 
+    /**
+     * @param message receives the message as a String,
+     * @param method receives the method as a String,
+     *               parsing them to the JsonObject and send message to the receiver.
+     * @param receiver receives the receiver name as a String.
+     *
+     */
     public void parseMessageToJson(String message, String method, String receiver) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("exception", false);
@@ -44,6 +61,11 @@ public abstract class RespondHandler {
         client.sendMessage(String.valueOf(jsonObject), receiver);
     }
 
+    /**
+     * @param exception receives the exceptions object,
+     * @param method receives the method.
+     *               parse them to JsonObject and send it to the client.
+     */
     public void parseErrorToJson(Exceptions exception, String method) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("exception", true);
@@ -53,6 +75,11 @@ public abstract class RespondHandler {
         client.sendMessage(String.valueOf(jsonObject));
     }
 
+    /**
+     * @param method receives the method as a String.
+     *               parsing array to Json and send it to client.
+     * @throws Exceptions
+     */
     public void parseJsonArrayToJson(String method) throws Exceptions {
         ObserverImp observer = new ObserverImp();
         int count = 0;
